@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace aoc_2021.Day1
+﻿namespace aoc_2021.Day1
 {
     internal class Solution
     {
         public int Solve()
         {
             var lines = File.ReadAllLines("Day1/input.txt");
-            var count=0;
-            var previous = int.MaxValue;
-            foreach (var line in lines)
+            var count = 0;
+            for (var i = 0; i < lines.Length - 3; i++)
             {
-                var number = int.Parse(line);
-                if(number > previous)
+                var number0 = int.Parse(lines[i]);
+                var number1 = int.Parse(lines[i + 1]);
+                var number2 = int.Parse(lines[i + 2]);
+                var number3 = int.Parse(lines[i + 3]);
+                var sum1 = number0 + number1 + number2;
+                var sum2 = number1 + number2 + number3;
+                if (sum2 > sum1)
                 {
                     count++;
                 }
-                previous = number;
             }
             return count;
         }
