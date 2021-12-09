@@ -1,2 +1,2 @@
-﻿var result = new aoc_2021.Day2.Solution().Solve();
+﻿var result = new aoc_2021.Day3.Solution().Solve();
 Console.WriteLine(result);
