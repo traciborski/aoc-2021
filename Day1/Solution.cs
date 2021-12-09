@@ -4,7 +4,7 @@
     {
         public int Solve()
         {
-            var lines = File.ReadAllLines("Day1/input.txt");
+            var lines = File.ReadAllLines("Day1/input");
             var count = 0;
             for (var i = 0; i < lines.Length - 3; i++)
             {
