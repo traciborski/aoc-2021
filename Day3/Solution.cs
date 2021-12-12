@@ -5,13 +5,57 @@
         public int Solve()
         {
             var lines = File.ReadAllLines("Day3/input");
-            var epsilon = 0;
-            var gamma = 0;
 
+            var ogr = lines.ToList();
+            var csr = lines.ToList();
+
+            for (int i = 0; i < 12; i++)
+            {
+                int x = Ones(ogr)[i];
+                var total = ogr.Count(x => x != null);
+                if (x >= total - x)
+                {
+                    LeaveOnly(ogr, i, '1');
+                }
+                else
+                {
+                    LeaveOnly(ogr, i, '0');
+                }
+            }
+
+            for (int i = 0; i < 12; i++)
+            {
+                int ones = Ones(csr)[i];
+                var total = csr.Count(x => x != null);
+
+                if (ones >= total - ones)
+                {
+                    LeaveOnly(csr, i, '0');
+                }
+                else
+                {
+                    LeaveOnly(csr, i, '1');
+                }
+            }
+
+            return Decimal(ogr.First(x => x != null)) * Decimal(csr.First(x => x != null));
+        }
+
+        private int Decimal(string s)
+        {
+            return Convert.ToInt32(s, 2);
+        }
+
+        private List<int> Ones(List<string> lines)
+        {
             var ones = new List<int>();
-            for (var i = 0; i < lines.Length; i++)
+            for (var i = 0; i < lines.Count; i++)
             {
                 var line = lines[i];
+                if (line == null)
+                {
+                    continue;
+                }
                 for (int j = 0; j < line.Length; j++)
                 {
                     char character = line[j];
@@ -25,33 +69,21 @@
                     }
                 }
             }
+            return ones;
+        }
 
-            //01011010010111
-            // two numbers
-            var total = lines.Length;
-            var multiplier = 1;
-            ones.Reverse();
-            foreach (var x in ones)
+        private void LeaveOnly(List<string> list, int position, char zeroOrOne)
+        {
+            for (int j = 0; j < list.Count; j++)
             {
-                if (x > total - x)
+                if (list[j] != null && list[j][position] != zeroOrOne)
                 {
-                    //1
-                    epsilon += multiplier;
+                    if (list[j] != null && list.Count(x => x != null) > 1)
+                    {
+                        list[j] = null;
+                    }
                 }
-                else
-                {
-                    // 0
-                    gamma += multiplier;
-                }
-                Console.WriteLine(x);
-                multiplier *= 2;
             }
-
-            Console.WriteLine();
-            Console.WriteLine(epsilon);
-            Console.WriteLine(gamma);
-
-            return epsilon * gamma;
         }
     }
 }
