@@ -27,14 +27,21 @@
 
         private int Solve(List<int> draws, List<List<List<int>>> boards)
         {
+            var total = boards.Count;
+            var won = new HashSet<int>();
             foreach (var draw in draws)
             {
-                foreach (var board in boards)
+                for (var index = 0; index < boards.Count; index++)
                 {
+                    var board = boards[index];
                     Mark(board, draw);
                     if (IsWinner(board))
                     {
-                        return Result(board, draw);
+                        won.Add(index);
+                        if (won.Count == total)
+                        {
+                            return Result(board, draw);
+                        }
                     }
                 }
             }
