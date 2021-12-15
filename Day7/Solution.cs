@@ -28,9 +28,21 @@
             foreach (var position in positions)
             {
 
-                fuel += position.Value * (Math.Abs(position.Key - current));
+                fuel += position.Value * StepCost(Math.Abs(position.Key - current));
             }
             return fuel;
+        }
+
+        private int StepCost(int step)
+        {
+            var result = 0;
+            var increment = 1;
+            for (var i = 0; i < step; i++)
+            {
+                result += increment;
+                increment++;
+            }
+            return result;
         }
     }
 }
